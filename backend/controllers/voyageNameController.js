@@ -2,7 +2,8 @@ const { getAllVoyage } = require('../model/voyageNameModel.js')
 
 async function fetchVoyageNames(req, res) {
     try {
-        const voyageNames = await getAllVoyage();
+        const vesselName = req.params.vesselName;
+        const voyageNames = await getAllVoyage(vesselName);
         res.json({success:true, voyageNames})
     } catch (error) {
         console.log(error);

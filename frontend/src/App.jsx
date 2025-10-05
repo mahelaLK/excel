@@ -1,11 +1,10 @@
 import React from 'react'
-import GangDetails from './GangDetails'
-import Voyage from './Voyage'
+import Vessel from './Vessel'
 
 const App = () => {
   return (
-    <div>
-      <Voyage/>
+    <div className='px-4 sm:px-[5vw] md:[7vw] lg:px-[9vw]'>
+      <Vessel/>
     </div>
   )
 }
