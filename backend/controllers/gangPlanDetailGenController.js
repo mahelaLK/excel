@@ -1,9 +1,9 @@
-const { getGangs } = require('../model/gangModel.js');
+const { getAllGangPlanDetailGen } = require('../model/gangPlanDetailGenModel.js');
 
-async function fetchGang(req, res) {
+async function fetchGangGen(req, res) {
     try {
         const inwardVoyage = req.params.inwardVoyage;
-        const details = await getGangs(inwardVoyage);
+        const details = await getAllGangPlanDetailGen(inwardVoyage);
         res.json({success: true, details});
     } catch (error) {
         console.log(error);
@@ -11,4 +11,4 @@ async function fetchGang(req, res) {
     }
 }
 
-module.exports = { fetchGang };
+module.exports = { fetchGangGen };

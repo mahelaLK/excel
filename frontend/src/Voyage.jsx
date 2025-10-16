@@ -5,17 +5,24 @@ import { PortContext } from './context/PortContext';
 import { useEffect } from 'react';
 import GangDetails from './GangDetails';
 import { IoIosSearch } from "react-icons/io";
+import GangDetailsCar from './GangDetailsCar';
 
-const Voyage = ({vesselName}) => {
+const Voyage = ({vesselName, vesselType}) => {
 
-  const { voyageNames, getGangDetails, getAllVoyageNames } = useContext(PortContext);
+  const { voyageNames, getGangDetails, getGangDetailsCar, getAllVoyageNames } = useContext(PortContext);
   const [selectedVoyage, setSelectedVoyage] = useState('');
   const [submittedVoyage, setSubmittedVoyage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmittedVoyage(selectedVoyage);
-    getGangDetails(selectedVoyage);
+    if (vesselType==='Container Ship') {
+      getGangDetails(selectedVoyage);
+    } else if (vesselType==='Car Carrier'){
+      getGangDetailsCar(selectedVoyage);
+    } else if (vesselType==='General Cargo'){
+      getGangDetails(selectedVoyage);
+    }
   }
 
   useEffect(()=>{
@@ -49,7 +56,15 @@ const Voyage = ({vesselName}) => {
         <button type="submit" className='bg-neutral-800 text-neutral-200 px-2 py-1 rounded-lg my-2 flex gap-2 justify-center items-center'>Submit <IoIosSearch/></button>
       </form>
       <hr className='mt-4'/>
-      {submittedVoyage && <GangDetails vesselName={vesselName} inwardVoyage={submittedVoyage}/>}
+      <div className='overflow-auto'>
+        {submittedVoyage && (
+          <>
+            {vesselType==='Container Ship' && (<GangDetails vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
+            {vesselType==='Car Carrier' && (<GangDetailsCar vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
+            {vesselType==='General Cargo' && (<GangDetails vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
+          </>
+        )}
+      </div>
     </div>
   )
 }

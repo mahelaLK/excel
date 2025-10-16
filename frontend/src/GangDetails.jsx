@@ -1,6 +1,4 @@
 import React, { useContext } from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react'
 import { PortContext } from './context/PortContext';
 //import * as XLSX from "xlsx";
 import XLSX from "xlsx-js-style";
