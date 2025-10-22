@@ -6,10 +6,11 @@ import { useEffect } from 'react';
 import GangDetails from './GangDetails';
 import { IoIosSearch } from "react-icons/io";
 import GangDetailsCar from './GangDetailsCar';
+import GangDetailsGen from './GangDetailsGen';
 
 const Voyage = ({vesselName, vesselType}) => {
 
-  const { voyageNames, getGangDetails, getGangDetailsCar, getAllVoyageNames } = useContext(PortContext);
+  const { voyageNames, getGangDetails, getGangDetailsCar, getGangDetailsGen, getAllVoyageNames } = useContext(PortContext);
   const [selectedVoyage, setSelectedVoyage] = useState('');
   const [submittedVoyage, setSubmittedVoyage] = useState('');
 
@@ -21,7 +22,7 @@ const Voyage = ({vesselName, vesselType}) => {
     } else if (vesselType==='Car Carrier'){
       getGangDetailsCar(selectedVoyage);
     } else if (vesselType==='General Cargo'){
-      getGangDetails(selectedVoyage);
+      getGangDetailsGen(selectedVoyage);
     }
   }
 
@@ -61,7 +62,7 @@ const Voyage = ({vesselName, vesselType}) => {
           <>
             {vesselType==='Container Ship' && (<GangDetails vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
             {vesselType==='Car Carrier' && (<GangDetailsCar vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
-            {vesselType==='General Cargo' && (<GangDetails vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
+            {vesselType==='General Cargo' && (<GangDetailsGen vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
           </>
         )}
       </div>
