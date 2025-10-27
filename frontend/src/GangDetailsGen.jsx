@@ -4,7 +4,7 @@ import { IoMdDownload } from "react-icons/io";
 
 const GangDetailsGen = ({vesselName, inwardVoyage}) => {
 
-    const { gangDetailsGen, exportTableStyledCar } = useContext(PortContext);
+    const { gangDetailsGen, exportTableStyledGen } = useContext(PortContext);
 
     if (!gangDetailsGen) {
         return <p>Loading....</p>
@@ -17,7 +17,7 @@ const GangDetailsGen = ({vesselName, inwardVoyage}) => {
   return (
     <div className="flex flex-col mt-4">
       <button
-        onClick={() => exportTableStyledCar(vesselName)}
+        onClick={() => exportTableStyledGen(vesselName)}
         className="bg-green-900 text-green-100 px-2 py-1 my-3 rounded-lg flex gap-2 justify-center items-center w-full"
       >
         Export to Excel <IoMdDownload />
@@ -399,14 +399,8 @@ const GangDetailsGen = ({vesselName, inwardVoyage}) => {
                     const lt = ltPlan[idx];
                     const details = lt?.Details?.[0];
 
-                    const hasTarget =
-                      details &&
-                      details.Target != null &&
-                      String(details.Target).trim() !== "";
-                    const hasActual =
-                      details &&
-                      details.Actual != null &&
-                      String(details.Actual).trim() !== "";
+                    const hasTarget = details && details.Target != null && String(details.Target).trim() !== "";
+                    const hasActual = details && details.Actual != null && String(details.Actual).trim() !== "";
 
                     if (hasTarget || hasActual) {
                       const tNum = hasTarget ? Number(details.Target) : 0;
@@ -580,8 +574,8 @@ const GangDetailsGen = ({vesselName, inwardVoyage}) => {
                           const shift = gangDetail.shiftPlanDetails.find(
                             (s) => s.ShiftNumber === shiftNo
                           );
-                          const ltThis = shift?.liftTimePlanDetails?.[i];
-                          const fm = ltThis.Foreman?.[i];
+                          //const ltThis = shift?.liftTimePlanDetails?.[i];
+                          //const fm = shift?.Foreman?.[i];
                           
                           return (
                             <td
@@ -590,7 +584,7 @@ const GangDetailsGen = ({vesselName, inwardVoyage}) => {
                             >
                               {i === 0 && (
                                 <>
-                                  FM: {fm ?? "-"}
+                                  FM: {shift?.Foreman ?? "-"}
                                   <br />
                                   {isRamp ? (
                                     <>
@@ -606,15 +600,15 @@ const GangDetailsGen = ({vesselName, inwardVoyage}) => {
                                     </>
                                   ) : (
                                     <>
-                                      BP: {ltThis?.BayPlanner?.[0] ?? "-"}
+                                      BP: {shift?.BayPlanner?.[0] ?? "-"}
                                       <br />
-                                      WM01: {ltThis?.Winchman?.[0] ?? "-"}
+                                      WM01: {shift?.Winchman?.[0] ?? "-"}
                                       <br />
-                                      WM02: {ltThis?.Winchman2?.[0] ?? "-"}
+                                      WM02: {shift?.Winchman2?.[0] ?? "-"}
                                       <br />
-                                      WM03: {ltThis?.Winchman3?.[0] ?? "-"}
+                                      WM03: {shift?.Winchman3?.[0] ?? "-"}
                                       <br />
-                                      RDT: {ltThis?.RDT?.[0] ?? "-"}
+                                      RDT: {shift?.RDT?.[0] ?? "-"}
                                     </>
                                   )}
                                 </>

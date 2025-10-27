@@ -77,7 +77,8 @@ async function getAllGangPlanDetail(inwardVoyage) {
                                 Target: r.Target,
                                 Actual: r.Actual,
                                 Remarks: r.Remarks
-                            }))})
+                            }))
+                        })
                     }    
 
                     shiftPlanDetails.push({

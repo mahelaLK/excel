@@ -49,11 +49,11 @@ async function getAllGangPlanDetailGen(inwardVoyage) {
                 ];
 
                 const gangPlanHeaderIds = detailResult.recordset.map(r => r.GangPlanHeaderID);
-                const listOfBays = detailResult.recordset.map(r => r.ListOfBays);
+                //const listOfBays = detailResult.recordset.map(r => r.ListOfBays);
 
                 const headerBayMap = detailResult.recordset.map(r=>({
                     gangPlanHeaderId: r.GangPlanHeaderID,
-                    listOfBays: r.ListOfBays
+                    listOfBays: r.ListOfBays?.trim()
                 }));
 
                 let gangDetails = [];
@@ -109,12 +109,12 @@ async function getAllGangPlanDetailGen(inwardVoyage) {
                             `);
 
                         let liftTimePlanDetails = [];
-                        //let foreman = null;
-                        //let bayplanner = null;
-                        //let winchman = null;
-                        //let winchman2 = null;
-                        //let winchman3 = null;
-                        //let rdt = null;
+                        let foreman = null;
+                        let bayplanner = null;
+                        let winchman = null;
+                        let winchman2 = null;
+                        let winchman3 = null;
+                        let rdt = null;
                         for (const liftTimeRow of shiftDetails.recordset){
                             const liftTimeDetails = await pool.request()
                             .input('shiftHeaderId', row.ShiftPlanHeaderID)
@@ -127,25 +127,19 @@ async function getAllGangPlanDetailGen(inwardVoyage) {
                                 WHERE LiftTime=@liftTime AND ShiftHeaderID=@shiftHeaderId AND ShiftNo=@shiftNumber AND GangNo=@gangNumber
                                 `);
 
-                            //foreman = liftTimeDetails.recordset.flatMap(r=>r.Foreman);
-                            //bayplanner = liftTimeDetails.recordset.flatMap(r=>r.BayPlanner);
-                            //winchman = liftTimeDetails.recordset.flatMap(r=>r.Winchman);
-                            //winchman2 = liftTimeDetails.recordset.flatMap(r=>r.Winchman2);
-                            //winchman3 = liftTimeDetails.recordset.flatMap(r=>r.Winchman3);
-                            //rdt = liftTimeDetails.recordset.flatMap(r=>r.RDT);
+                            foreman = liftTimeDetails.recordset.flatMap(r=>r.Foreman?.trim());
+                            bayplanner = liftTimeDetails.recordset.flatMap(r=>r.BayPlanner?.trim());
+                            winchman = liftTimeDetails.recordset.flatMap(r=>r.Winchman?.trim());
+                            winchman2 = liftTimeDetails.recordset.flatMap(r=>r.Winchman2?.trim());
+                            winchman3 = liftTimeDetails.recordset.flatMap(r=>r.Winchman3?.trim());
+                            rdt = liftTimeDetails.recordset.flatMap(r=>r.RDT?.trim());
                             liftTimePlanDetails.push({
                                 LiftTime: liftTimeRow.LiftTime,
                                 Details: liftTimeDetails.recordset.map(r=>({
                                     Target: r.Target,
                                     Actual: r.Actual,
                                     Remarks: r.Remarks?.trim()
-                                })),
-                                Foreman: liftTimeDetails.recordset.map(r => r.Foreman?.trim()),
-                                BayPlanner: liftTimeDetails.recordset.map(r => r.BayPlanner?.trim()),
-                                Winchman: liftTimeDetails.recordset.map(r => r.Winchman?.trim()),
-                                Winchman2: liftTimeDetails.recordset.map(r => r.Winchman2?.trim()),
-                                Winchman3: liftTimeDetails.recordset.map(r => r.Winchman3?.trim()),
-                                RDT: liftTimeDetails.recordset.map(r => r.RDT?.trim())
+                                }))
                             })
                         }
 
@@ -153,8 +147,14 @@ async function getAllGangPlanDetailGen(inwardVoyage) {
                             ShiftNumber: row.ShiftNumber,
                             ShiftStartDate: row.ShiftStartDate,
                             Supervisor: row.Supervisor?.trim(),
-                            NoOfDrivers: row.NoOfDrivers,
+                            Foreman: foreman,
+                            BayPlanner: bayplanner,
+                            Winchman: winchman,
+                            Winchman2: winchman2,
+                            Winchman3: winchman3,
+                            RDT: rdt,
                             TK: row.TK?.trim(),
+                            NoOfDrivers: row.NoOfDrivers,
                             Checklist: row.Checklist,
                             Traffic: row.Traffic,
                             Unlashing: row.Unlashing,
