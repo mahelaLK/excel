@@ -17,7 +17,7 @@ const Voyage = ({vesselName, vesselType}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmittedVoyage(selectedVoyage);
-    if (vesselType==='Container Ship') {
+    if (vesselType==='Container') {
       getGangDetails(selectedVoyage);
     } else if (vesselType==='Car Carrier'){
       getGangDetailsCar(selectedVoyage);
@@ -60,7 +60,7 @@ const Voyage = ({vesselName, vesselType}) => {
       <div className='overflow-auto'>
         {submittedVoyage && (
           <>
-            {vesselType==='Container Ship' && (<GangDetails vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
+            {vesselType==='Container' && (<GangDetails vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
             {vesselType==='Car Carrier' && (<GangDetailsCar vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
             {vesselType==='General Cargo' && (<GangDetailsGen vesselName={vesselName} inwardVoyage={submittedVoyage}/>)}
           </>

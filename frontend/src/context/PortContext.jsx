@@ -43,9 +43,7 @@ const PortContextProvider = (props) => {
 
   const getGangDetails = async (inwardVoyage) => {
     try {
-      const response = await axios.get(
-        backendUrl + `/api/gangplandetails/${inwardVoyage}`
-      );
+      const response = await axios.get(backendUrl + `/api/gangplandetails/${inwardVoyage}`);
       if (response.data.success) {
         setGangDetails(response.data.details);
       } else {
@@ -58,9 +56,7 @@ const PortContextProvider = (props) => {
 
   const getGangDetailsCar = async (inwardVoyage) => {
     try {
-        const response = await axios.get(
-            backendUrl + `/api/gangplandetailcars/${inwardVoyage}`
-        );
+        const response = await axios.get(backendUrl + `/api/gangplandetailcars/${inwardVoyage}`);
         if (response.data.success) {
             setGangDetailCars(response.data.details);
         } else {
@@ -73,9 +69,7 @@ const PortContextProvider = (props) => {
 
   const getGangDetailsGen = async (inwardVoyage) => {
     try {
-        const response = await axios.get(
-            backendUrl + `/api/gangplandetailgen/${inwardVoyage}`
-        );
+        const response = await axios.get(backendUrl + `/api/gangplandetailgen/${inwardVoyage}`);
         if (response.data.success) {
             setGangDetailsGen(response.data.details);
         } else {
